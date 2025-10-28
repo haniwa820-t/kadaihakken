@@ -1,5 +1,5 @@
 // script.js
-let currentSlide = 8;
+let currentSlide = 0;
 const slides = document.querySelectorAll('.slide');
 const totalSlides = slides.length;
 
