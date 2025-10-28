@@ -261,6 +261,21 @@ body {
     flex: 1;
 }
 
+.research-item-neo {
+    background: rgba(255, 255, 255, 0.7);
+    padding: 20px;
+    border-radius: 15px;
+    border: 1px solid rgba(210, 105, 30, 0.3);
+    text-align: left;
+    flex: 1;
+}
+
+.research-item-neo p a {
+    color: #d2691e;
+    font-weight: bold;
+    text-decoration: none;
+}
+
 .research-item h4 {
     font-size: 1.4rem;
     color: #cd853f;
@@ -273,9 +288,12 @@ body {
 }
 
 .cool-icon {
-    font-size: 4rem;
-    margin: 20px 0;
-    /*animation: pulse 2s infinite;*/
+    font-size: 5rem;
+    /*
+    color: aqua;
+    background: linear-gradient(90deg, #58c6ff 0%, #076ad9 40%, #ff3bef 80%);
+    animation: pulse 1s infinite;
+    */
 }
 
 @keyframes pulse {
@@ -286,7 +304,7 @@ body {
     }
 
     50% {
-        transform: scale(1.1);
+        transform: scale(1.5);
     }
 }
 

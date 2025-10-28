@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>COOLISH - 体育館環境改善プロジェクト</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #333;
+            overflow-x: hidden;
+        }
+
+        .slide-container {
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 40px;
+            position: relative;
+        }
+
+        .slide {
+            display: none;
+            width: 90%;
+            max-width: 1200px;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 50px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            backdrop-filter: blur(10px);
+            animation: slideIn 0.5s ease-in-out;
+        }
+
+        .slide.active {
+            display: block;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        h1 {
+            font-size: 3em;
+            text-align: center;
+            color: #2c3e50;
+            margin-bottom: 30px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+        }
+
+        h2 {
+            font-size: 2.5em;
+            color: #34495e;
+            margin-bottom: 25px;
+            border-bottom: 3px solid #3498db;
+            padding-bottom: 10px;
+        }
+
+        h3 {
+            font-size: 1.8em;
+            color: #2980b9;
+            margin: 20px 0 15px 0;
+        }
+
+        .subtitle {
+            font-size: 1.5em;
+            text-align: center;
+            color: #7f8c8d;
+            margin-bottom: 40px;
+            font-style: italic;
+        }
+
+        .members {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
+            margin-top: 30px;
+        }
+
+        .member {
+            background: #ecf0f1;
+            padding: 15px;
+            border-radius: 10px;
+            text-align: center;
+            font-weight: bold;
+            color: #2c3e50;
+            transition: transform 0.3s ease;
+        }
+
+        .member:hover {
+            transform: translateY(-5px);
+        }
+
+        .problem-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 30px;
+            margin-top: 30px;
+        }
+
+        .problem-item {
+            background: linear-gradient(135deg, #ff6b6b, #ffa500);
+            color: white;
+            padding: 25px;
+            border-radius: 15px;
+            text-align: center;
+            font-size: 1.2em;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+
+        .solution-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 25px;
+            margin-top: 30px;
+        }
+
+        .solution-item {
+            background: linear-gradient(135deg, #4ecdc4, #44a08d);
+            color: white;
+            padding: 25px;
+            border-radius: 15px;
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+
+        .solution-item:hover {
+            transform: scale(1.05);
+        }
+
+        .data-box {
+            background: #f8f9fa;
+            border-left: 5px solid #e74c3c;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+
+        .highlight {
+            background: linear-gradient(120deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 15px;
+            margin: 20px 0;
+            text-align: center;
+            font-size: 1.3em;
+            font-weight: bold;
+        }
+
+        .research-item {
+            background: #fff;
+            border: 2px solid #3498db;
+            padding: 20px;
+            margin: 15px 0;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .research-title {
+            font-weight: bold;
+            color: #2980b9;
+            margin-bottom: 10px;
+        }
+
+        .research-content {
+            color: #34495e;
+            line-height: 1.6;
+        }
+
+        .citation {
+            font-size: 0.9em;
+            color: #7f8c8d;
+            font-style: italic;
+            margin-top: 10px;
+        }
+
+        .effect-list {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .effect-item {
+            background: linear-gradient(135deg, #a8edea, #fed6e3);
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            font-weight: bold;
+            color: #2c3e50;
+        }
+
+        .navigation {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 15px;
+            z-index: 1000;
+        }
+
+        .nav-btn {
+            background: rgba(52, 152, 219, 0.9);
+            color: white;
+            border: none;
+            padding: 15px 25px;
+            border-radius: 50px;
+            cursor: pointer;
+            font-size: 1.1em;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        .nav-btn:hover {
+            background: rgba(52, 152, 219, 1);
+            transform: translateY(-3px);
+        }
+
+        .nav-btn:disabled {
+            background: rgba(127, 140, 141, 0.5);
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .slide-number {
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            background: rgba(52, 152, 219, 0.9);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 20px;
+            font-weight: bold;
+        }
+
+        .icon {
+            font-size: 3em;
+            margin-bottom: 15px;
+        }
+
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        li {
+            margin: 15px 0;
+            padding: 10px;
+            background: rgba(52, 152, 219, 0.1);
+            border-radius: 8px;
+            border-left: 4px solid #3498db;
+        }
+
+        .temperature-display {
+            font-size: 4em;
+            color: #e74c3c;
+            text-align: center;
+            margin: 20px 0;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            margin: 30px 0;
+        }
+
+        .stat-item {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 25px;
+            border-radius: 15px;
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 2.5em;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .stat-label {
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+    </style>
+</head>
+<body>
+    <!-- スライド1: タイトル -->
+    <div class="slide-container">
+        <div class="slide active">
+            <div class="slide-number">1/8</div>
+            <h1>🏃‍♂️ COOLISH 🏃‍♀️</h1>
+            <div class="subtitle">体育館環境改善プロジェクト<br>～夏涼しく、冬暖かい体育館を目指して～</div>
+            <div class="members">
+                <div class="member">上野広夢</div>
+                <div class="member">藤本俊平</div>
+                <div class="member">堀川偉弘</div>
+                <div class="member">宮島唯花</div>
+                <div class="member">加古川采依</div>
+                <div class="member">藤井祐輔</div>
+                <div class="member">宮路涼太</div>
+                <div class="member">山根義琉</div>
+            </div>
+        </div>
+
+        <!-- スライド2: 問題提起 -->
+        <div class="slide">
+            <div class="slide-number">2/8</div>
+            <h2>🔥 なぜこの研究が必要なのか？</h2>
+            <div class="temperature-display">40℃+</div>
+            <div class="problem-grid">
+                <div class="problem-item">
+                    <div class="icon">🥵</div>
+                    <strong>熱中症の危険</strong><br>
+                    体育館内温度が外気温より5-10℃高い
+                </div>
+                <div class="problem-item">
+                    <div class="icon">📉</div>
+                    <strong>パフォーマンス低下</strong><br>
+                    高温環境では運動能力が20%低下
+                </div>
+                <div class="problem-item">
+                    <div class="icon">💰</div>
+                    <strong>高コスト問題</strong><br>
+                    大空間冷房は通常の3-5倍の電力
+                </div>
+                <div class="problem-item">
+                    <div class="icon">🏥</div>
+                    <strong>健康リスク</strong><br>
+                    年間約5万人が運動中熱中症で搬送
+                </div>
+            </div>
+        </div>
+
+        <!-- スライド3: 現状データ -->
+        <div class="slide">
+            <div class="slide-number">3/8</div>
+            <h2>📊 現状のデータ分析</h2>
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <div class="stat-number">38.4%</div>
+                    <div class="stat-label">山口県高校体育館<br>空調設置率</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">15%</div>
+                    <div class="stat-label">高専体育館<br>空調設置率</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">年間300万円</div>
+                    <div class="stat-label">大型体育館<br>空調運用コスト</div>
+                </div>
+            </div>
+            <div class="data-box">
+                <h3>🌡️ 体育館内温度の実態</h3>
+                <ul>
+                    <li>夏季最高温度：42℃（外気温35℃時）</li>
+                    <li>冬季最低温度：8℃（外気温2℃時）</li>
+                    <li>適正運動温度：18-25℃</li>
+                    <li>現状との差：夏季17℃、冬季10℃の改善が必要</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- スライド4: 先行研究 -->
+        <div class="slide">
+            <div class="slide-number">4/8</div>
+            <h2>📚 先行研究調査</h2>
+            <div class="research-item">
+                <div class="research-title">🎨 建物熱対策の効果</div>
+                <div class="research-content">
+                    白色塗装による屋根面温度の低減効果は最大15℃。反射率を0.2から0.8に上げることで、室内温度を5-10℃低減可能。
+                </div>
+                <div class="citation">出典：Forbes Japan, Anuradha Varanasi (2024)</div>
+            </div>
+            <div class="research-item">
+                <div class="research-title">🌀 大空間換気システム</div>
+                <div class="research-content">
+                    体育館のような大空間では、自然換気と機械換気の組み合わせにより、従来比30%の省エネ効果を実現。適切な開口部配置により風速を2倍向上。
+                </div>
+                <div class="citation">出典：川崎医療福祉大学研究論文 (2014)</div>
+            </div>
+            <div class="research-item">
+                <div class="research-title">⚡ 再生可能エネルギー活用</div>
+                <div class="research-content">
+                    学校施設での太陽光発電システム導入により、年間電力消費量の40-60%を自給自足可能。初期投資回収期間は8-12年。
+                </div>
+                <div class="citation">出典：文部科学省施設整備資料 (2024)</div>
+            </div>
+        </div>
+
+        <!-- スライド5: 解決策1 -->
+        <div class="slide">
+            <div class="slide-number">5/8</div>
+            <h2>💡 解決策①：建物改修アプローチ</h2>
+            <div class="solution-grid">
+                <div class="solution-item">
+                    <div class="icon">🎨</div>
+                    <h3>外壁白色化</h3>
+                    <p>反射率80%の特殊塗料使用<br>屋根・外壁面温度15℃低減</p>
+                </div>
+                <div class="solution-item">
+                    <div class="icon">🧱</div>
+                    <h3>断熱材強化</h3>
+                    <p>壁面・天井断熱材厚増<br>熱貫流率50%改善</p>
+                </div>
+                <div class="solution-item">
+                    <div class="icon">🪟</div>
+                    <h3>窓面対策</h3>
+                    <p>遮熱フィルム・庇設置<br>日射熱取得60%削減</p>
+                </div>
+            </div>
+            <div class="highlight">
+                期待効果：室内温度5-8℃低減、年間空調負荷30%削減
+            </div>
+        </div>
+
+        <!-- スライド6: 解決策2 -->
+        <div class="slide">
+            <div class="slide-number">6/8</div>
+            <h2>💨 解決策②：自然エネルギー活用</h2>
+            <div class="solution-grid">
+                <div class="solution-item">
+                    <div class="icon">🌀</div>
+                    <h3>風道設計</h3>
+                    <p>開口部の戦略的配置<br>自然換気量3倍向上</p>
+                </div>
+                <div class="solution-item">
+                    <div class="icon">🌡️</div>
+                    <h3>温度差換気</h3>
+                    <p>上下温度差利用<br>24時間自動換気システム</p>
+                </div>
+                <div class="solution-item">
+                    <div class="icon">💨</div>
+                    <h3>排熱促進</h3>
+                    <p>天井排気扇とルーバー<br>熱気滞留防止</p>
+                </div>
+            </div>
+            <div class="data-box">
+                <h3>🌪️ 風速・換気量の改善目標</h3>
+                <ul>
+                    <li>現状平均風速：0.2m/s → 目標：1.0m/s</li>
+                    <li>換気回数：現状1回/h → 目標：6回/h</li>
+                    <li>上下温度差：現状8℃ → 目標：3℃</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- スライド7: 解決策3 -->
+        <div class="slide">
+            <div class="slide-number">7/8</div>
+            <h2>⚡ 解決策③：持続可能エネルギーシステム</h2>
+            <div class="solution-grid">
+                <div class="solution-item">
+                    <div class="icon">☀️</div>
+                    <h3>太陽光発電</h3>
+                    <p>屋根面200kW設置<br>年間発電量20万kWh</p>
+                </div>
+                <div class="solution-item">
+                    <div class="icon">🚴</div>
+                    <h3>運動発電</h3>
+                    <p>エアロバイク連動発電<br>1台で日間5kWh発電</p>
+                </div>
+                <div class="solution-item">
+                    <div class="icon">🌪️</div>
+                    <h3>小型風力発電</h3>
+                    <p>垂直軸型風車設置<br>年間発電量5万kWh</p>
+                </div>
+            </div>
+            <div class="highlight">
+                総発電量：年間25万kWh（体育館年間消費電力の60%をカバー）
+            </div>
+            <div class="data-box">
+                <h3>💰 経済効果試算</h3>
+                <ul>
+                    <li>年間電力費削減：約300万円</li>
+                    <li>初期投資回収期間：約10年</li>
+                    <li>25年間総削減額：約7,500万円</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- スライド8: 総合効果と今後の展望 -->
+        <div class="slide">
+            <div class="slide-number">8/8</div>
+            <h2>🎯 期待される総合効果</h2>
+            <div class="effect-list">
+                <div class="effect-item">
+                    <div class="icon">🌡️</div>
+                    <strong>温度改善</strong><br>
+                    夏季8℃低減<br>冬季6℃向上
+                </div>
+                <div class="effect-item">
+                    <div class="icon">💰</div>
+                    <strong>コスト削減</strong><br>
+                    年間運営費<br>40%削減
+                </div>
+                <div class="effect-item">
+                    <div class="icon">🌱</div>
+                    <strong>環境配慮</strong><br>
+                    CO2排出量<br>年間50t削減
+                </div>
+                <div class="effect-item">
+                    <div class="icon">🏃</div>
+                    <strong>健康促進</strong><br>
+                    熱中症リスク<br>90%低減
+                </div>
+            </div>
+            <div class="highlight">
+                <div class="icon">🚀</div>
+                <h3>今後の展開計画</h3>
+                <p>段階的実装により3年間で全システム完成<br>
+                他の教育施設への展開モデルとして発展</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="navigation">
+        <button class="nav-btn" id="prevBtn" onclick="changeSlide(-1)">◀ 前へ</button>
+        <button class="nav-btn" id="nextBtn" onclick="changeSlide(1)">次へ ▶</button>
+    </div>
+
+    <script>
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide');
+        const totalSlides = slides.length;
+
+        function showSlide(n) {
+            slides[currentSlide].classList.remove('active');
+            currentSlide = (n + totalSlides) % totalSlides;
+            slides[currentSlide].classList.add('active');
+            
+            // ナビゲーションボタンの状態更新
+            document.getElementById('prevBtn').disabled = currentSlide === 0;
+            document.getElementById('nextBtn').disabled = currentSlide === totalSlides - 1;
+        }
+
+        function changeSlide(n) {
+            if (currentSlide + n >= 0 && currentSlide + n < totalSlides) {
+                showSlide(currentSlide + n);
+            }
+        }
+
+        // キーボードナビゲーション
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'ArrowLeft') changeSlide(-1);
+            if (e.key === 'ArrowRight') changeSlide(1);
+        });
+
+        // 初期状態設定
+        showSlide(0);
+    </script>
+</body>
+</html>
